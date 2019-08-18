@@ -1,2 +1,2 @@
-# Malseg
-UCT Honours Project: investigate various approaches to automated malaria diagnosis using high resolution microscopic images of blood smears. 
+# MalCADe
+UCT Honours Project: investigate computer vision and supervised learning for computer aided detection of malaria in blood cell images.
