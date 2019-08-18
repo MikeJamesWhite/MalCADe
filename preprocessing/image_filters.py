@@ -70,7 +70,7 @@ def emboss(img):
     return cv2.filter2D(img, -1, kernel)
 
 
-def cy_model(img):
+def hsv_model(img):
     return cv2.cvtColor(img, cv2.COLOR_RGB2HSV)
 
 
@@ -94,9 +94,9 @@ if __name__ == "__main__":
     img_gray = iu.resize_image(img_gray)
 
     # Individually display images
-    # iu.display_image("cy", iu.combine_images(img, cy_model(img)))
-    # iu.display_image("hsv_green", iu.combine_images(img_gray, isolate_green(cy_model(img))))
-    # iu.display_image("hsv_green_threshold", iu.combine_images(isolate_green(cy_model(img)), threshold(contrast(isolate_green(cy_model(img)), 2.0, 10), thresh=200)))
+    # iu.display_image("hsv", iu.combine_images(img, hsv_model(img)))
+    # iu.display_image("hsv_green", iu.combine_images(img_gray, isolate_green(hsv_model(img))))
+    # iu.display_image("hsv_green_threshold", iu.combine_images(isolate_green(hsv_model(img)), threshold(contrast(isolate_green(hsv_model(img)), 2.0, 10), thresh=200)))
     # iu.display_image("adaptive_histogram", iu.combine_images(img_gray, adaptive_histogram(img_gray)))
     # iu.display_image("Median", iu.combine_images(img, median_filter(img)))
     # iu.display_image("Contrast", iu.combine_images(img, contrast(img, 2.0, 10)))
@@ -112,7 +112,7 @@ if __name__ == "__main__":
     # Display filtered images in single window
     '''
     images = [
-        iu.prepare_image(contrast(isolate_green(cy_model(contrast(img))), 2.5, 10), grey=True),
+        iu.prepare_image(contrast(isolate_green(hsv_model(contrast(img))), 2.5, 10), grey=True),
         iu.prepare_image(adaptive_histogram(img_gray), grey=True),
         iu.prepare_image(median_filter(img)),
         iu.prepare_image(contrast(img, 2.0, 10)),

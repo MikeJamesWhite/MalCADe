@@ -7,7 +7,7 @@ import numpy as np
 from sklearn import metrics
 from joblib import dump
 from .metrics import Metrics
-
+import preprocessing.image_utils as image_utils
 
 def combine_metrics(metrics_list):
     accuracy = 0
@@ -48,8 +48,6 @@ def combine_metrics(metrics_list):
 def run_tests(test_name, dataset, models, n_images=1000, training_split=0.7,
               test_set=None, n_training_images=None, n_test_images=None,
               n_iterations=1, dimensions=(150, 150)):
-    sys.path.append('./preprocessing')
-    import ImageUtils
     aggregate_metrics = {}
 
     # Run specified number of iterations
@@ -64,7 +62,7 @@ def run_tests(test_name, dataset, models, n_images=1000, training_split=0.7,
 
         if (test_set is None):
             # Load training and test sets from single dataset
-            train_data, train_labels, test_data, test_labels = ImageUtils.read_dataset(
+            train_data, train_labels, test_data, test_labels = image_utils.read_dataset(
                 n_training_images,
                 n_test_images,
                 './datasets/' + dataset,
@@ -73,12 +71,12 @@ def run_tests(test_name, dataset, models, n_images=1000, training_split=0.7,
             )
         else:
             # Load train set from specified dataset
-            train_data, train_labels = ImageUtils.read_dataset(
+            train_data, train_labels = image_utils.read_dataset(
                 n_training_images, 0, './datasets/' + dataset, dimensions[0], dimensions[1]
             )
 
             # Load test set from specified dataset
-            test_data, test_labels = ImageUtils.read_dataset(
+            test_data, test_labels = image_utils.read_dataset(
                 n_test_images, 0, './datasets/' + test_set, dimensions[0], dimensions[1]
             )
 

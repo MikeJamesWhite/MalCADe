@@ -98,12 +98,11 @@ class SVM(Model):
         pass
 
 if __name__ == '__main__':
-    sys.path.append('./preprocessing')
-    import ImageUtils
-    import ImageFilters as img_filters
-    from FeatureExtraction import fd_histogram, fd_haralick, fd_hu_moments
+    import preprocessing.image_utils as image_utils
+    import preprocessing.image_filters as img_filters
+    from preprocessing.feature_extraction import hsv_histogram, greyscale_histogram, haralick, hu_moments
 
-    train_data, train_labels, test_data, test_labels = ImageUtils.read_dataset(
+    train_data, train_labels, test_data, test_labels = image_utils.read_dataset(
         TRAIN_SIZE,
         TEST_SIZE,
         './datasets/kaggle'
@@ -113,7 +112,7 @@ if __name__ == '__main__':
     svm_model = SVM(
         label='Contrast-edge SVM',
         preprocessing=[img_filters.contrast, img_filters.edge],
-        features=[fd_hu_moments, fd_haralick, lambda x: fd_histogram(x, bins=16)]  
+        features=[hu_moments, haralick, hsv_histogram(bins=16)]  
     )
     svm_model.train(train_data, train_labels)
 

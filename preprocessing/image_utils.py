@@ -1,11 +1,11 @@
+'''Utility functions for working with images'''
+
 import os
-import math
 import random
-import cv2
+import math
 import numpy as np
 import glob
-import random
-
+import cv2
 
 def get_images(folder):
     return glob.iglob(folder+"/*")
@@ -148,6 +148,4 @@ if __name__ == "__main__":
     for im in img_list:
         img = read_image(im)
         img = resize_image(img)
-        # cv2.namedWindow(img)        # Create a named window
-        # cv2.moveWindow(img, 40, 30)  # Move it to (40, 30)        
         display_image(im, img)
