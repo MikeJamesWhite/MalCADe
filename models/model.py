@@ -19,10 +19,5 @@ class Model(ABC):
     def run(self, input):
         pass
 
-    # Save the model to a specified test folder path and name
-    @abstractmethod
-    def save(self, path, name):
-        pass
-
 if __name__ == '__main__':
     print("Hello from model.py")

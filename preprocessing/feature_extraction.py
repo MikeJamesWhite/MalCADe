@@ -31,13 +31,10 @@ def haralick(img):
     return haralick
 
 
-def __hsv_histogram(img, bins=16):
-    # convert to HSV
-    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-
+def __colour_histogram(img, bins=16):
     # compute and normalise histogram
     hist = cv2.calcHist(
-        [hsv], [0, 1, 2], None,
+        [img], [0, 1, 2], None,
         [bins, bins, bins],
         [0, 256, 0, 256, 0, 256]
     )
@@ -46,9 +43,9 @@ def __hsv_histogram(img, bins=16):
     return hist.flatten()
 
 
-def hsv_histogram(bins=16):
+def colour_histogram(bins=16):
     '''Calculate and return the HSV colour histogram of input image'''
-    return lambda x: __hsv_histogram(x, bins)
+    return lambda x: __colour_histogram(x, bins)
 
 
 def __greyscale_histogram(img, bins=16):

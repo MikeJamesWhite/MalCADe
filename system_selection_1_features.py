@@ -2,8 +2,7 @@
 # Author: Michael White (mike.james.white@icloud.com)
 
 from testing_framework.test_runner import run_tests
-from preprocessing.feature_extraction import hu_moments, haralick, hsv_histogram, greyscale_histogram
-from preprocessing.image_filters import contrast, edge, isolate_green, hsv_model, threshold
+from preprocessing.feature_extraction import hu_moments, haralick, colour_histogram, greyscale_histogram
 from models import rf, svm
 
 def initial_grey_histogram_bins_evaluation():
@@ -80,83 +79,101 @@ def initial_grey_histogram_bins_evaluation():
         features=[greyscale_histogram(bins=64)]
     )
 
-    run_tests('Histogram Bin Evaluations', 'kaggle', [rf_model_grey2, rf_model_grey4, rf_model_grey8, rf_model_grey16, rf_model_grey32, rf_model_grey64, svm_model_grey2, svm_model_grey4, svm_model_grey8, svm_model_grey16, svm_model_grey32, svm_model_grey64], n_iterations=5, n_images=10000, training_split=0.5)
-
-
-def initial_hsv_histogram_bins_evaluation():
-    rf_model_hsv2 = rf.RF(
-        label='hsv 2 bin RF',
-        preprocessing=[],
-        features=[hsv_histogram(bins=2)]
-    )
-
-    rf_model_hsv4 = rf.RF(
-        label='hsv 4 bin RF',
-        preprocessing=[],
-        features=[hsv_histogram(bins=4)]
-    )
-
-    rf_model_hsv8 = rf.RF(
-        label='hsv 8 bin RF',
-        preprocessing=[],
-        features=[hsv_histogram(bins=8)]
-    )
-
-    rf_model_hsv16 = rf.RF(
-        label='hsv 16 bin RF',
-        preprocessing=[],
-        features=[hsv_histogram(bins=16)]
-    )
-
-    rf_model_hsv32 = rf.RF(
-        label='hsv 32 bin RF',
-        preprocessing=[],
-        features=[hsv_histogram(bins=32)]
-    )
-
-    svm_model_hsv2 = svm.SVM(
-        label='hsv 2 bin SVM',
-        preprocessing=[],
-        features=[hsv_histogram(bins=2)]
-    )
-
-    svm_model_hsv4 = svm.SVM(
-        label='hsv 4 bin SVM',
-        preprocessing=[],
-        features=[hsv_histogram(bins=4)]
-    )
-
-    svm_model_hsv8 = svm.SVM(
-        label='hsv 8 bin SVM',
-        preprocessing=[],
-        features=[hsv_histogram(bins=8)]
-    )
-
-    svm_model_hsv16 = svm.SVM(
-        label='hsv 16 bin SVM',
-        preprocessing=[],
-        features=[hsv_histogram(bins=16)]
-    )
-
     run_tests(
-        'HSV Histogram Bin Evaluations',
+        'experiment1_hist_grey',
         'kaggle',
         [
-            rf_model_hsv2,
-            rf_model_hsv4,
-            rf_model_hsv8,
-            rf_model_hsv16,
-            rf_model_hsv32,
-            svm_model_hsv2,
-            svm_model_hsv4,
-            svm_model_hsv8,
-            svm_model_hsv16
+            rf_model_grey2,
+            rf_model_grey4,
+            rf_model_grey8,
+            rf_model_grey16,
+            rf_model_grey32,
+            rf_model_grey64,
+            svm_model_grey2,
+            svm_model_grey4,
+            svm_model_grey8,
+            svm_model_grey16,
+            svm_model_grey32,
+            svm_model_grey64
         ],
         n_iterations=5, n_images=10000, training_split=0.5
     )
 
 
-def hu_moments_haralick_evaluation():
+def initial_colour_histogram_bins_evaluation():
+    rf_model_colour2 = rf.RF(
+        label='colour 2 bin RF',
+        preprocessing=[],
+        features=[colour_histogram(bins=2)]
+    )
+
+    rf_model_colour4 = rf.RF(
+        label='colour 4 bin RF',
+        preprocessing=[],
+        features=[colour_histogram(bins=4)]
+    )
+
+    rf_model_colour8 = rf.RF(
+        label='colour 8 bin RF',
+        preprocessing=[],
+        features=[colour_histogram(bins=8)]
+    )
+
+    rf_model_colour16 = rf.RF(
+        label='colour 16 bin RF',
+        preprocessing=[],
+        features=[colour_histogram(bins=16)]
+    )
+
+    rf_model_colour32 = rf.RF(
+        label='colour 32 bin RF',
+        preprocessing=[],
+        features=[colour_histogram(bins=32)]
+    )
+
+    svm_model_colour2 = svm.SVM(
+        label='colour 2 bin SVM',
+        preprocessing=[],
+        features=[colour_histogram(bins=2)]
+    )
+
+    svm_model_colour4 = svm.SVM(
+        label='colour 4 bin SVM',
+        preprocessing=[],
+        features=[colour_histogram(bins=4)]
+    )
+
+    svm_model_colour8 = svm.SVM(
+        label='colour 8 bin SVM',
+        preprocessing=[],
+        features=[colour_histogram(bins=8)]
+    )
+
+    svm_model_colour16 = svm.SVM(
+        label='colour 16 bin SVM',
+        preprocessing=[],
+        features=[colour_histogram(bins=16)]
+    )
+
+    run_tests(
+        'experiment1_hist_colour',
+        'kaggle',
+        [
+            rf_model_colour2,
+            rf_model_colour4,
+            rf_model_colour8,
+            rf_model_colour16,
+            rf_model_colour32,
+            svm_model_colour2,
+            svm_model_colour4,
+            svm_model_colour8,
+            svm_model_colour16
+        ],
+        n_iterations=5, n_images=10000, training_split=0.5
+    )
+
+
+def hist_hu_moments_haralick_evaluation():
     rf_model_haralick = rf.RF(
         label='RF with haralick',
         preprocessing=[],
@@ -169,10 +186,16 @@ def hu_moments_haralick_evaluation():
         features=[hu_moments]
     )
 
-    rf_model_haralick_hu = rf.RF(
-        label='RF with haralick and hu moments',
+    rf_model_grey_hist = rf.RF(
+        label='RF with grey hist',
         preprocessing=[],
-        features=[haralick, hu_moments]
+        features=[greyscale_histogram(bins=64)]
+    )
+
+    rf_model_colour_hist = rf.RF(
+        label='RF with colour hist',
+        preprocessing=[],
+        features=[colour_histogram(bins=16)]
     )
 
     svm_model_haralick = svm.SVM(
@@ -187,23 +210,34 @@ def hu_moments_haralick_evaluation():
         features=[hu_moments]
     )
 
-    svm_model_haralick_hu = svm.SVM(
-        label='SVM with haralick and hu moments',
+    svm_model_grey_hist = svm.SVM(
+        label='SVM with grey hist',
         preprocessing=[],
-        features=[haralick, hu_moments]
+        features=[greyscale_histogram(bins=64)]
+    )
+
+    svm_model_colour_hist = svm.SVM(
+        label='SVM with colour hist',
+        preprocessing=[],
+        features=[colour_histogram(bins=16)]
     )
 
     run_tests(
-        'Haralick + Hu Moment Initial Evaluation',
+        'experiment1_hist_hu_haralick',
         'kaggle',
         [
             rf_model_haralick,
             rf_model_hu,
-            rf_model_haralick_hu
+            rf_model_grey_hist,
+            rf_model_colour_hist,
+            svm_model_haralick,
+            svm_model_hu,
+            svm_model_grey_hist,
+            svm_model_colour_hist
         ],
         n_iterations=5, n_images=10000, training_split=0.5)
 
 if __name__ == '__main__':
-    # initial_hsv_histogram_bins_evaluation()
+    # initial_colour_histogram_bins_evaluation()
     # initial_grey_histogram_bins_evaluation()
-    hu_moments_haralick_evaluation()
+    hist_hu_moments_haralick_evaluation()

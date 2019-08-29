@@ -18,10 +18,10 @@ class Metrics:
             self.precision = metrics.precision_score(expected, predicted, pos_label='Infected')
             self.recall = metrics.recall_score(expected, predicted, pos_label='Infected')
             confusion_matrix = metrics.confusion_matrix(expected, predicted)
-            self.fp = confusion_matrix[0][1]
-            self.fn = confusion_matrix[1][0]
-            self.tp = confusion_matrix[1][1]
-            self.tn = confusion_matrix[0][0]
+            self.fp = confusion_matrix[1][0]
+            self.fn = confusion_matrix[0][1]
+            self.tp = confusion_matrix[0][0]
+            self.tn = confusion_matrix[1][1]
             self.training_time = training_time
             self.test_time = test_time
 
@@ -35,3 +35,26 @@ class Metrics:
                 "FN: " + str(self.fn) + "\n" +
                 "Training time: " + str(self.training_time) + "s\n" +
                 "Test time: " + str(self.test_time) + "s\n")
+
+# If module is run directly, run assertion tests
+if __name__ == '__main__':    
+    print('Running tests...')
+    metric = Metrics(
+        ['Infected',
+        'Infected',
+        'Infected',
+        'Uninfected',
+        'Uninfected',
+        'Infected'],
+        ['Infected',
+        'Infected',
+        'Infected',
+        'Uninfected',
+        'Uninfected',
+        'Uninfected'])
+
+    assert(metric.tp == 3)
+    assert(metric.tn == 2)
+    assert(metric.fp == 0)
+    assert(metric.fn == 1)
+    print('Passed all tests!')

@@ -9,6 +9,8 @@ from joblib import dump
 from .metrics import Metrics
 import preprocessing.image_utils as image_utils
 
+# Combine a list of metrics objects, giving the mean timings, accuracy, precision and recall.
+# Also provides total tp, tn, fp, fn for all runs.
 def combine_metrics(metrics_list):
     accuracy = 0
     precision = 0
@@ -47,7 +49,7 @@ def combine_metrics(metrics_list):
 # Training split is only used if no separate test set is specified
 def run_tests(test_name, dataset, models, n_images=1000, training_split=0.7,
               test_set=None, n_training_images=None, n_test_images=None,
-              n_iterations=1, dimensions=(150, 150)):
+              n_iterations=1, dimensions=(50, 50)):
     aggregate_metrics = {}
 
     # Run specified number of iterations
@@ -119,7 +121,7 @@ def run_tests(test_name, dataset, models, n_images=1000, training_split=0.7,
             with open(filepath + "results.txt", 'w') as file:
                 file.write(str(metrics))
 
-    # Calculate and write aggregate metrics
+    # Calculate, print and write aggregate metrics
     print(
         'Aggregate Results' + '\n' +
         '-----------------'
@@ -132,3 +134,21 @@ def run_tests(test_name, dataset, models, n_images=1000, training_split=0.7,
         print("Saving results to '" + filepath + "aggregate_results.txt'" + "\n---\n")
         with open(filepath + "aggregate_results.txt", 'w') as file:
             file.write(str(aggregate))
+
+# If module is run directly, run assertion tests
+if __name__ == '__main__':
+    import math
+    print('Running tests...')
+
+    metrics1 = Metrics(['Infected', 'Infected', 'Infected'], ['Uninfected', 'Infected', 'Infected'])
+    metrics2 = Metrics(['Uninfected', 'Uninfected'], ['Uninfected', 'Infected'])
+    metrics3 = combine_metrics([metrics1, metrics2])
+
+    assert (metrics3.tp == 2)
+    assert (metrics3.tn == 1)
+    assert (metrics3.fp == 1)
+    assert (metrics3.fn == 1)
+    assert (math.isclose(metrics3.recall, (metrics1.recall + metrics2.recall)/2))
+    assert (math.isclose(metrics3.precision, (metrics1.precision + metrics2.precision)/2))
+
+    print('Passed all tests!')

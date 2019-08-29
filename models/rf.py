@@ -86,28 +86,23 @@ class RF(Model):
         print('Predicting presence of parasites in', len(images), 'images\n')
         return self.classifier.predict(images)
 
-    def save(self, path, name):
-        pass
-
 if __name__ == '__main__':
-    import preprocessing.image_utils as image_utils
-    import preprocessing.image_filters as img_filters
-    from preprocessing.feature_extraction import hsv_histogram, greyscale_histogram, haralick, hu_moments
+    print('Running assertion tests...')
 
-    train_data, train_labels, test_data, test_labels = image_utils.read_dataset(TRAIN_SIZE, TEST_SIZE, './datasets/kaggle')
-
-    # Build and train RF model
-    rf_model = RF(
-        label='Comtrast-edge RF',
-        preprocessing=[img_filters.contrast, img_filters.edge],
-        features=[hu_moments, haralick, lambda x: hsv_histogram(bins=16)]
+    rf_model_1 = RF(
+        label='Test rf model 1',
+        n_estimators=10,
+        max_depth=10
     )
-    rf_model.train(train_data, train_labels)
+    assert(rf_model_1.classifier.n_estimators == 10)
+    assert(rf_model_1.classifier.max_depth == 10)
 
-    # Run predictions on test set
-    expected = test_labels
-    predicted = rf_model.run(test_data)
+    rf_model_2 = RF(
+        label='Test rf model 2',
+        n_estimators=1000,
+        max_depth=None
+    )
+    assert(rf_model_2.classifier.n_estimators == 1000)
+    assert(rf_model_2.classifier.max_depth == None)
 
-    # Print results
-    print("Classification report:\n%s\n" % (metrics.classification_report(expected, predicted)))
-    print("Confusion matrix:\n%s" % metrics.confusion_matrix(expected, predicted))
+    print('All tests successful!')

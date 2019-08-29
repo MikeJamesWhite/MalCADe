@@ -15,7 +15,7 @@ class SVM(Model):
     ''' Support Vector Machine model for use with MalSeg testing framework'''
 
     def __init__(self, label='Unlabeled SVM model', kernel='rbf',
-                 random_state=42, C=1, degree=3, gamma=0.0005, shrinking=True,
+                 random_state=42, C=1, degree=3, gamma='scale', shrinking=True,
                  preprocessing=[], features=[], *args, **kwargs):
         print('Initialising model:', label)
         self.classifier = svm.SVC(
@@ -39,8 +39,6 @@ class SVM(Model):
             for filter in self.preprocessing:
                 for i in range(len(train_data)):
                     train_data[i] = filter(train_data[i])
-                    if len(train_data[i].shape) != 3:
-                        print("Image has", len(train_data[i].shape), "channels")
 
         # Apply feature extraction
         if len(self.features) > 0:
@@ -94,36 +92,27 @@ class SVM(Model):
         print('Predicting presence of parasites in', len(images), 'images\n')
         return self.classifier.predict(images)
 
-    def save(self, path, name):
-        pass
-
 if __name__ == '__main__':
-    import preprocessing.image_utils as image_utils
-    import preprocessing.image_filters as img_filters
-    from preprocessing.feature_extraction import hsv_histogram, greyscale_histogram, haralick, hu_moments
+    print('Running assertion tests...')
 
-    train_data, train_labels, test_data, test_labels = image_utils.read_dataset(
-        TRAIN_SIZE,
-        TEST_SIZE,
-        './datasets/kaggle'
+    poly_model = SVM(
+        label='Test poly model',
+        kernel='poly',
+        degree=5,
+        gamma=100
     )
+    assert(poly_model.classifier.gamma == 100)
+    assert(poly_model.classifier.C == 300)
+    assert(poly_model.classifier.kernel == 'poly')
+    assert(poly_model.classifier.degree == 5)
 
-    # Build and train SVM model
-    svm_model = SVM(
-        label='Contrast-edge SVM',
-        preprocessing=[img_filters.contrast, img_filters.edge],
-        features=[hu_moments, haralick, hsv_histogram(bins=16)]  
+    rbf_model = SVM(
+        label='Test rbf model',
+        kernel='rbf',
+        gamma=1
     )
-    svm_model.train(train_data, train_labels)
+    assert(rbf_model.classifier.gamma == 1)
+    assert(rbf_model.classifier.C == 500)
+    assert(rbf_model.classifier.kernel == 'rbf')
 
-    # Run predictions on test set
-    expected = test_labels
-    predicted = svm_model.run(test_data)
-
-    # Print results
-    print("Classification report:\n%s\n" % (
-        metrics.classification_report(expected, predicted)
-    ))
-    print("Confusion matrix:\n%s" % (
-        metrics.confusion_matrix(expected, predicted)
-    ))
+    print('All tests successful!')
