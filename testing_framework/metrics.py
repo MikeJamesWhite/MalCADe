@@ -1,6 +1,5 @@
 from sklearn import metrics
 
-
 class Metrics:
     def __init__(self, expected=[], predicted=[], training_time=0, test_time=0, pre_calculated_values=None):
         if not (pre_calculated_values is None):
@@ -36,6 +35,42 @@ class Metrics:
                 "Training time: " + str(self.training_time) + "s\n" +
                 "Test time: " + str(self.test_time) + "s\n")
 
+# Combine a list of metrics objects, giving the mean timings, accuracy, precision and recall.
+# Also provides total tp, tn, fp, fn for all runs.
+def combine_metrics(metrics_list):
+    accuracy = 0
+    precision = 0
+    recall = 0
+    fp = 0
+    fn = 0
+    tp = 0
+    tn = 0
+    training_time = 0
+    test_time = 0
+
+    for m in metrics_list:
+        accuracy += m.accuracy
+        precision += m.precision
+        recall += m.recall
+        fp += m.fp
+        fn += m.fn
+        tp += m.tp
+        tn += m.tn
+        training_time += m.training_time
+        test_time += m.test_time
+
+    return Metrics(pre_calculated_values={
+        'accuracy': accuracy/len(metrics_list),
+        'precision': precision/len(metrics_list),
+        'recall': recall/len(metrics_list),
+        'fp': fp,
+        'fn': fn,
+        'tp': tp,
+        'tn': tn,
+        'training_time': training_time/len(metrics_list),
+        'test_time': test_time/len(metrics_list)
+    })
+
 # If module is run directly, run assertion tests
 if __name__ == '__main__':    
     print('Running tests...')
@@ -57,4 +92,17 @@ if __name__ == '__main__':
     assert(metric.tn == 2)
     assert(metric.fp == 0)
     assert(metric.fn == 1)
+
+    import math
+    metrics1 = Metrics(['Infected', 'Infected', 'Infected'], ['Uninfected', 'Infected', 'Infected'])
+    metrics2 = Metrics(['Uninfected', 'Uninfected'], ['Uninfected', 'Infected'])
+    metrics3 = combine_metrics([metrics1, metrics2])
+
+    assert (metrics3.tp == 2)
+    assert (metrics3.tn == 1)
+    assert (metrics3.fp == 1)
+    assert (metrics3.fn == 1)
+    assert (math.isclose(metrics3.recall, (metrics1.recall + metrics2.recall)/2))
+    assert (math.isclose(metrics3.precision, (metrics1.precision + metrics2.precision)/2))
+
     print('Passed all tests!')

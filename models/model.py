@@ -2,8 +2,8 @@ from abc import ABC, abstractmethod
 
 
 class Model(ABC):
-    ''' Abstract model class defining the structure of a ML model to be used
-    with the MalSeg testing framework'''
+    ''' Abstract model class defining the structure of an ML model to be used
+    with the MalCADe evaluation framework'''
 
     # Perform any initial setup and handle arguments to the model
     def __init__(self, *args, **kwargs):
@@ -18,6 +18,3 @@ class Model(ABC):
     @abstractmethod
     def run(self, input):
         pass
-
-if __name__ == '__main__':
-    print("Hello from model.py")

@@ -1,7 +1,7 @@
 # Final evaluation to test performance of best models on unseen pathcare data
 # Author: Michael White (mike.james.white@icloud.com)
 
-from testing_framework.test_runner import run_tests
+from testing_framework.test_runner import run_training_and_tests
 from preprocessing.feature_extraction import hu_moments, haralick, colour_histogram, greyscale_histogram
 from preprocessing.image_filters import contrast, isolate_saturation, hsv_model, threshold
 from models import rf, svm
@@ -29,7 +29,7 @@ def run_experiment():
         max_depth=100
     )
 
-    run_tests(
+    run_training_and_tests(
         'experiment_1_NLM_performance',
         'kaggle',
         [

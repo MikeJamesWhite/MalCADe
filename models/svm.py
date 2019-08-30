@@ -5,12 +5,6 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.preprocessing import MinMaxScaler
 from .model import Model
 
-# Constants
-TRAIN_SIZE = 1000
-TEST_SIZE = 2000
-N_BINS = 16
-
-
 class SVM(Model):
     ''' Support Vector Machine model for use with MalSeg testing framework'''
 

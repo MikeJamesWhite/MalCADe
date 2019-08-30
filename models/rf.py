@@ -5,12 +5,6 @@ from sklearn.preprocessing import MinMaxScaler
 from .model import Model
 from joblib import dump, load
 
-# Constants
-TRAIN_SIZE = 700
-TEST_SIZE = 500
-N_BINS = 16
-
-
 class RF(Model):
     ''' Random Forest model for use with MalSeg testing framework'''
 

@@ -1,7 +1,7 @@
 # Evaluation to determine best hyperparameters for each model
 # Author: Michael White (mike.james.white@icloud.com)
 
-from testing_framework.test_runner import run_tests
+from testing_framework.test_runner import run_training_and_tests
 from preprocessing.feature_extraction import hu_moments, haralick, colour_histogram, greyscale_histogram
 from preprocessing.image_filters import contrast, isolate_saturation, hsv_model, threshold
 from models import rf, svm
@@ -48,7 +48,7 @@ def svm_kernel():
         degree=5
     )
 
-    run_tests(
+    run_training_and_tests(
         'system_selection_3_svm_kernel',
         'kaggle',
         [
@@ -102,7 +102,7 @@ def svm_gamma():
         gamma=1.0
     )
 
-    run_tests(
+    run_training_and_tests(
         'system_selection_3_svm_gamma',
         'kaggle',
         [
@@ -147,7 +147,7 @@ def rf_forest_size():
         n_estimators=250
     )
 
-    run_tests(
+    run_training_and_tests(
         'system_selection_3_rf_forest_size',
         'kaggle',
         [
@@ -197,7 +197,7 @@ def rf_max_depth():
         max_depth=None
     )
 
-    run_tests(
+    run_training_and_tests(
         'system_selection_3_rf_max_depth',
         'kaggle',
         [

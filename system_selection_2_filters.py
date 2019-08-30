@@ -1,7 +1,7 @@
 # Initial evaluation to determine best image filtering approaches
 # Author: Michael White (mike.james.white@icloud.com)
 
-from testing_framework.test_runner import run_tests
+from testing_framework.test_runner import run_training_and_tests
 from preprocessing.feature_extraction import hu_moments, haralick, colour_histogram, greyscale_histogram
 from preprocessing.image_filters import contrast, isolate_saturation, hsv_model, threshold
 from models import rf, svm
@@ -73,7 +73,7 @@ def greyscale_histogram_with_filters():
         features=[greyscale_histogram(bins=64)]
     )
 
-    run_tests(
+    run_training_and_tests(
         'experiment2_grey_hist_preprocessing',
         'kaggle',
         [
@@ -116,7 +116,7 @@ def colour_histogram_with_filters():
         features=[colour_histogram(bins=16)]
     )
 
-    run_tests(
+    run_training_and_tests(
         'experiment2_colour_hist_preprocessing',
         'kaggle',
         [
@@ -189,7 +189,7 @@ def haralick_with_filters():
         features=[haralick]
     )
 
-    run_tests(
+    run_training_and_tests(
         'experiment2_haralick_preprocessing',
         'kaggle',
         [

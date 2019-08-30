@@ -1,7 +1,7 @@
 # Initial evaluation to determine best feature extraction approaches
 # Author: Michael White (mike.james.white@icloud.com)
 
-from testing_framework.test_runner import run_tests
+from testing_framework.test_runner import run_training_and_tests
 from preprocessing.feature_extraction import hu_moments, haralick, colour_histogram, greyscale_histogram
 from models import rf, svm
 
@@ -79,7 +79,7 @@ def initial_grey_histogram_bins_evaluation():
         features=[greyscale_histogram(bins=64)]
     )
 
-    run_tests(
+    run_training_and_tests(
         'experiment1_hist_grey',
         'kaggle',
         [
@@ -155,7 +155,7 @@ def initial_colour_histogram_bins_evaluation():
         features=[colour_histogram(bins=16)]
     )
 
-    run_tests(
+    run_training_and_tests(
         'experiment1_hist_colour',
         'kaggle',
         [
@@ -222,7 +222,7 @@ def hist_hu_moments_haralick_evaluation():
         features=[colour_histogram(bins=16)]
     )
 
-    run_tests(
+    run_training_and_tests(
         'experiment1_hist_hu_haralick',
         'kaggle',
         [
