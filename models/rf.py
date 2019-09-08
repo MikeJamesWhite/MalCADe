@@ -12,6 +12,8 @@ class RF(Model):
                  features=[], n_estimators=10, max_depth=None,
                  min_samples_split=2, min_samples_leaf=1, max_features='auto',
                  bootstrap=True, *args, **kwargs):
+        """Initialise the RF system"""
+
         print('Initialising model:', label)
         self.classifier = ensemble.RandomForestClassifier(
             n_estimators=n_estimators,
@@ -29,7 +31,9 @@ class RF(Model):
         return super().__init__(*args, **kwargs)
 
     def train(self, train_data, train_labels):
-        # Apply preprocessing
+        """Apply filtering and feature extraction, before training model"""
+
+        # Apply filtering
         if len(self.preprocessing) > 0:
             print('Applying', len(self.preprocessing), 'filter(s) to training data')
             for filter in self.preprocessing:
@@ -55,8 +59,10 @@ class RF(Model):
         self.classifier.fit(train_data, train_labels)
 
     def run(self, images):
-        if len(self.preprocessing) > 0:
-            # Apply preprocessing
+        """Apply filtering and feature extraction, before running model on new data"""
+
+        # Apply filtering
+        if len(self.preprocessing) > 0:           
             print('Applying', len(self.preprocessing), 'filter(s) to input images')
             for filter in self.preprocessing:
                 for i in range(len(images)):
@@ -80,6 +86,8 @@ class RF(Model):
         print('Predicting presence of parasites in', len(images), 'images\n')
         return self.classifier.predict(images)
 
+
+# If module is run directly, run assertion tests
 if __name__ == '__main__':
     print('Running assertion tests...')
 

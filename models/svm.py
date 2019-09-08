@@ -11,6 +11,8 @@ class SVM(Model):
     def __init__(self, label='Unlabeled SVM model', kernel='rbf',
                  random_state=42, C=1, degree=3, gamma='scale', shrinking=True,
                  preprocessing=[], features=[], *args, **kwargs):
+        """Initialise the SVM system"""
+        
         print('Initialising model:', label)
         self.classifier = svm.SVC(
             C=C,
@@ -27,7 +29,9 @@ class SVM(Model):
         return super().__init__(*args, **kwargs)
 
     def train(self, train_data, train_labels):
-        # Apply preprocessing
+        """Apply filtering and feature extraction, before training model"""
+
+        # Apply filtering
         if len(self.preprocessing) > 0:
             print('Applying', len(self.preprocessing), 'filter(s) to training data')
             for filter in self.preprocessing:
@@ -53,7 +57,9 @@ class SVM(Model):
         self.classifier.fit(train_data, train_labels)
 
     def run(self, images):
-        # Apply preprocessing
+        """Apply filtering and feature extraction, before running model on new data"""
+
+        # Apply filtering
         if len(self.preprocessing) > 0:
             print(
                 'Applying',
@@ -86,6 +92,8 @@ class SVM(Model):
         print('Predicting presence of parasites in', len(images), 'images\n')
         return self.classifier.predict(images)
 
+
+# If module is run directly, run assertion tests
 if __name__ == '__main__':
     print('Running assertion tests...')
 

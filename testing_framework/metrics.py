@@ -1,7 +1,13 @@
 from sklearn import metrics
 
 class Metrics:
+    """Set of metrics to describe performance when models run on the MalCADe test runner"""
+
     def __init__(self, expected=[], predicted=[], training_time=0, test_time=0, pre_calculated_values=None):
+        """Initialise a new Metrics object, either by manually calculating the metrics or
+        using pre-calculated values
+        """
+
         if not (pre_calculated_values is None):
             self.accuracy = pre_calculated_values['accuracy']
             self.precision = pre_calculated_values['precision']
@@ -25,6 +31,8 @@ class Metrics:
             self.test_time = test_time
 
     def __str__(self):
+        """Convert metrics to a formatted string representation"""
+
         return ("Accuracy: " + str(self.accuracy) + "\n" +
                 "Precision: " + str(self.precision) + "\n" +
                 "Recall: " + str(self.recall) + "\n" +
@@ -35,9 +43,12 @@ class Metrics:
                 "Training time: " + str(self.training_time) + "s\n" +
                 "Test time: " + str(self.test_time) + "s\n")
 
-# Combine a list of metrics objects, giving the mean timings, accuracy, precision and recall.
-# Also provides total tp, tn, fp, fn for all runs.
 def combine_metrics(metrics_list):
+    """ Combine a list of metrics objects, giving the mean timings, accuracy, precision and recall.
+    
+    Also provides total tp, tn, fp, fn for all runs.
+    """
+
     accuracy = 0
     precision = 0
     recall = 0
@@ -70,6 +81,7 @@ def combine_metrics(metrics_list):
         'training_time': training_time/len(metrics_list),
         'test_time': test_time/len(metrics_list)
     })
+
 
 # If module is run directly, run assertion tests
 if __name__ == '__main__':    

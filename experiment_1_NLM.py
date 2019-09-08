@@ -1,5 +1,4 @@
-# Final evaluation to test performance of best models on unseen pathcare data
-# Author: Michael White (mike.james.white@icloud.com)
+"""Experiment to test performance of best models on kaggle data"""
 
 from testing_framework.test_runner import run_training_and_tests
 from preprocessing.feature_extraction import hu_moments, haralick, colour_histogram, greyscale_histogram
@@ -13,6 +12,8 @@ hsv_saturation_threshold = [hsv_model, isolate_saturation, lambda x: contrast(x,
 hsv_saturation_contrast = [hsv_model, isolate_saturation, lambda x: contrast(x, 2.5, 10)]
 
 def run_experiment():
+    """Run experiment one, testing performance on kaggle data"""
+
     optimal_svm = svm.SVM(
         label='Optimised SVM model',
         preprocessing=hsv_saturation_threshold,
