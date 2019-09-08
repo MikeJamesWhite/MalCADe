@@ -106,9 +106,24 @@ def display_image(title, img):
 
     cv2.imshow(title, img)
 
+
+# If module is run directly, run assertion tests
 if __name__ == "__main__":
+    print('Running assertion tests...')
+
     # Test read_images_in_folder()
-    img_list = read_images_in_folder(7, "./images")
+    img_list = read_images_in_folder(7, "./images/")
     assert(len(img_list) == 7)
 
     # Test read_dataset()
+    train_data, train_labels, test_data, test_labels = read_dataset(
+        100, 20, './datasets/kaggle', 50, 50
+    )
+    assert(len(train_data) == 100)
+    assert(len(test_data) == 20)
+    assert(train_labels.count("Infected") == 50)
+    assert(train_labels.count("Uninfected") == 50)
+    assert(test_labels.count("Infected") == 10)
+    assert(test_labels.count("Uninfected") == 10)
+
+    print('All tests successful!')

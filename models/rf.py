@@ -28,7 +28,7 @@ class RF(Model):
         self.preprocessing = preprocessing
         self.features = features
 
-        return super().__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def train(self, train_data, train_labels):
         """Apply filtering and feature extraction, before training model"""

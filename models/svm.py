@@ -26,7 +26,7 @@ class SVM(Model):
         self.preprocessing = preprocessing
         self.features = features
 
-        return super().__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def train(self, train_data, train_labels):
         """Apply filtering and feature extraction, before training model"""
@@ -104,7 +104,6 @@ if __name__ == '__main__':
         gamma=100
     )
     assert(poly_model.classifier.gamma == 100)
-    assert(poly_model.classifier.C == 300)
     assert(poly_model.classifier.kernel == 'poly')
     assert(poly_model.classifier.degree == 5)
 
@@ -114,7 +113,6 @@ if __name__ == '__main__':
         gamma=1
     )
     assert(rbf_model.classifier.gamma == 1)
-    assert(rbf_model.classifier.C == 500)
     assert(rbf_model.classifier.kernel == 'rbf')
 
     print('All tests successful!')
