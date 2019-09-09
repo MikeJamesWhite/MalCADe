@@ -5,16 +5,16 @@ class Model(ABC):
     ''' Abstract model class defining the structure of an ML model to be used
     with the MalCADe evaluation framework'''
 
-    # Perform any initial setup and handle arguments to the model
     def __init__(self, *args, **kwargs):
+        """Perform initial setup and handle arguments to the model"""
         pass
 
-    # Perform any required training of the model
     @abstractmethod
     def train(self, inputs, outputs):
+        """Perform training of the model"""
         pass
 
-    # Run the model with a new input
     @abstractmethod
     def run(self, input):
+        """Run the model with new input data"""
         pass

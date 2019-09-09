@@ -61,7 +61,7 @@ def run_training_and_tests(test_name, dataset, models, n_images = 1000, training
                 aggregate_metrics[model.label] = [metrics]
 
             # Print results
-            print("Results\n" + " --  --  -- ")
+            print("Results\n" + "------")
             print(str(metrics))
 
             # Save model
@@ -79,7 +79,7 @@ def run_training_and_tests(test_name, dataset, models, n_images = 1000, training
     # Calculate, print and write aggregate metrics
     print(
         'Aggregate Results' + '\n' +
-        ' --  --  --  --  --  --  --  -- -'
+        '-----------------'
     )
     for model in models:
         aggregate = combine_metrics(aggregate_metrics[model.label])
@@ -119,7 +119,7 @@ def run_tests(test_name, dataset, models, n_test_images = 120, dimensions = (50,
         metrics = Metrics(test_labels, predicted, 0.0, test_time)
 
         # Print results
-        print("Results\n" + " --  --  -- ")
+        print("Results\n" + "------")
         print(str(metrics))
 
         # Save results
